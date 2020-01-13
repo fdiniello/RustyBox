@@ -8,11 +8,13 @@ By recreating the standar Unix-like command line utilities we'll get a hold on t
 Just download the repo and run `cargo build`
 So far the only commands implemented are:
   * ls
+  * ln
   * basename
- 
+
 To enable each one just link the main binary program with the commands name:
 
      $ ls -s target/debug/rusty_box ls
+     $ ls -s target/debug/rusty_box ln
      $ ls -s target/debug/rusty_box basename
-    
+
 The difference in the call name acts as switch.
