@@ -13,8 +13,8 @@ So far the only commands implemented are:
 
 To enable each one just link the main binary program with the commands name:
 
-     $ ls -s target/debug/rusty_box ls
-     $ ls -s target/debug/rusty_box ln
-     $ ls -s target/debug/rusty_box basename
+     $ ln -s target/debug/rusty_box ls
+     $ ln -s target/debug/rusty_box ln
+     $ ln -s target/debug/rusty_box basename
 
 The difference in the call name acts as switch.

@@ -1,4 +1,4 @@
-pub fn basename(mut args: Vec<String>) -> String {
+pub fn basename(mut args: Vec<String>) -> Result<String,String> {
     //default mode: only 1 arg
     if args.len() == 1 {
         let mut root_offset = args[0].find('/');
@@ -6,9 +6,9 @@ pub fn basename(mut args: Vec<String>) -> String {
             args[0] = args[0].split_off( root_offset.unwrap() + 1 );
             root_offset = args[0].find('/');
         }
-        args[0].clone()
+        Ok(args[0].clone())
     }else {
         // others: not implemented
-        args[0].clone()
+        Ok(args[0].clone())
     }
 }

@@ -2,7 +2,7 @@
 
 use crate::basename::basename;
 
-pub fn ln( args: Vec<String>) -> String {
+pub fn ln( args: Vec<String>) -> Result<String,String> {
 
     let link_fn = if find_arg( &args, 's' ) {
         std::os::unix::fs::symlink
@@ -10,24 +10,30 @@ pub fn ln( args: Vec<String>) -> String {
         std::fs::hard_link
     };
 
-    let src = if let Some(src) = find_src( &args ) {
+
+    let src =
+    if let Some(src) = find_src( &args ) {
         src
     } else {
-        return String::from("Can't find src");
+        return Err(String::from("Can't find src"));
     };
+
     let dst = if let Some(dst) = find_dst( &args, &src){
         dst
     } else {
-        return String::from("Can't find dst");
+        return Err(String::from("Can't find dst"));
     };
+
+
     let res = link_fn(src,dst);
 
+
     if let Ok(_m) = res {
-        String::from("")
+        Ok( String::from("") )
     } else if let Err(e) = res {
-        e.to_string()
+        Err( e.to_string() )
     } else {
-        String::from("")
+        Err( String::from("") )
     }
 }
 // busco si aparece S o no para definir hard/soft
@@ -60,7 +66,11 @@ fn find_dst( args: &Vec<String>, src: &String ) -> Option<String> {
         if last != src {
             Some(last.to_string())
         } else {
-            Some(basename( vec![src.clone()] ))
+            if let Ok(dst) = basename( vec![src.clone()] ){
+                Some(dst)
+            } else {
+                None
+            }
         }
     } else {
         None

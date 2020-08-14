@@ -3,7 +3,7 @@ use std::fmt::Write;
 use std::fs;
 
 
-pub fn ls( args: Vec<String> ) -> String {
+pub fn ls( args: Vec<String> ) -> Result<String,String> {
     let mut ret = String::new();
     let dir = if args.len() == 0 {
         Path::new( "./" )
@@ -15,11 +15,11 @@ pub fn ls( args: Vec<String> ) -> String {
         for each in entries {
             if let Ok(each) = each {
                 if let Ok(name) = each.file_name().into_string() {
-                    write!(ret,"{}  ", name);
+                    let _ = write!(ret,"{}  ", name);
                 }
             }
         }
         println!();
     }
-    ret
+    Ok(ret)
 }
